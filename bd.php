@@ -1,8 +1,8 @@
 <?php
-$servername = "localhost";  // Nom du serveur
-$username = "root";         // Nom d'utilisateur
-$password = "";             // Mot de passe
-$dbname = "testphp";     // Nom de la base de données
+$servername = "localhost";  
+$username = "root";         
+$password = "";             
+$dbname = "testphp";     
 
 $dsn = "mysql:host=$servername;dbname=$dbname;charset=utf8";
 
@@ -13,7 +13,7 @@ try {
 
     $conn->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
 
-    // echo "Connexion réussie à la base de données ! <br>";
+
     
       $query1 ="
       CREATE TABLE IF NOT EXISTS client(
@@ -53,13 +53,7 @@ try {
       $stmt1 = $conn->query($query1);
       $stmt2 = $conn->query($query2);
       $stmt3 = $conn->query($query3);
-      // if($stmt1==TRUE&&$stmt2==TRUE&&$stmt3==TRUE)
-      // {
-      //   echo "LES tables cree avec succés <br>";
-      // }else{
-      //   echo "err <br>";
-      // }
-  
+     
 } catch (PDOException $e) {
     echo "Erreur de connexion : " . $e->getMessage();
 }
