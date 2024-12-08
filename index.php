@@ -79,7 +79,7 @@
 	</table>
 
 	<div id="tableactivite" class="table flex flex flex-col w-full  hidden">
-		<div class="flex justify-end"><button id="showAllActivites" class="text-white">show All Activite</button></div>
+		<div class="flex justify-end"><button id="showAllActivites" class="text-white" >show All Activite</button></div>
 		<div class="flex items-center justify-center">
 			<!-- Author: FormBold Team -->
 			<div class="mx-auto w-full max-w-[550px] bg-white">
@@ -162,42 +162,8 @@
 			</div>
 		</div>
 </div>
-<div id="modaleActifites" class="hidden  bg-black/50 fixed inset-0 z-50 flex justify-center items-center">
-    <div class=" w-full max-w-2xl px-4 h-auto ">
-        <div class="bg-white rounded-lg " id="formwhite">
-            <div class="flex items-start justify-between p-5 border-b ">
-                <h3 class="text-gray-900 text-xl lg:text-2xl font-semibold ">
-                   Chose  Players
-                </h3>
-                <button id="closeBteForListPlayers" type="button" class="closeBte text-gray-400  hover:bg-gray-200  rounded-lg p-5  ">
-                    &times;
-                </button>
-            </div>
-            <div id="bgCarde" class="bg-white p-8  ">
-				
-						<?php 
-							echo "<table class='table min-w-full bg-white border border-gray-200 rounded-lg shadow-md overflow-hidden'>";
-                            echo "<tr class='bg-gray-100 text-gray-600 text-left'>
-				<th class='py-3 px-4 font-medium text-sm uppercase tracking-wider'>id</th>
-				<th class='py-3 px-4 font-medium text-sm uppercase tracking-wider'>Nom</th>
-				<th class='py-3 px-4 font-medium text-sm uppercase tracking-wider'>prenom</th>
-				<th class='py-3 px-4 font-medium text-sm uppercase tracking-wider'>mail</th>
-				<th class='py-3 px-4 font-medium text-sm uppercase tracking-wider'>telephone</th>
-				<th class='py-3 px-4 font-medium text-sm uppercase tracking-wider'>adresse</th>
-				<th class='py-3 px-4 font-medium text-sm uppercase tracking-wider'>date de naissance</th>
-			</tr>";
-                            echo "</table>";
-						?>
-					
-				
-			</div>
-			
-        </div>
-    </div>
-</div>
-	</div>
 
-	</div>
+	
   </section>
   <script>
    document.querySelector('#reservation').addEventListener('click',()=>{
@@ -239,13 +205,10 @@
 	 })
 	
    })
-
+   
    document.querySelector('#showAllActivites').addEventListener('click',()=>{
-	  document.querySelector('#modaleActifites').classList.remove('hidden');
+	window.location.href="AllActivities.php";
    })
-  document.querySelector('#closeBteForListPlayers').addEventListener('click',()=>{
-	document.querySelector('#modaleActifites').classList.add('hidden');
-  })
   </script>
 </body>
 </html>
