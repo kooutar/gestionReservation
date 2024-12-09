@@ -3,7 +3,6 @@ $servername = "localhost";
 $username = "root";         
 $password = "";             
 $dbname = "testphp";     
-
 $dsn = "mysql:host=$servername;dbname=$dbname;charset=utf8";
 
 try {

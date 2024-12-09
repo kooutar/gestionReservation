@@ -6,7 +6,6 @@
 	<meta name="viewport" content="width=device-width, initial-scale=1.0">
 	<title>Slide Navbar</title>
 <link href="https://fonts.googleapis.com/css2?family=Jost:wght@500&display=swap" rel="stylesheet">
-<!-- <link rel="stylesheet" href="style.css"> -->
 <script src="https://cdn.tailwindcss.com"></script>
 </head>
 <body>
@@ -83,7 +82,7 @@
 		<div class="flex items-center justify-center">
 			<!-- Author: FormBold Team -->
 			<div class="mx-auto w-full max-w-[550px] bg-white">
-				<form class="p-6" action="traitement.php" method="post">
+				<form class="p-6" action="index.php" method="post">
 					<div class="-mx-3 flex flex-wrap">
 						<div class="w-full px-3 sm:w-1/2">
 							<div class="mb-5">
@@ -159,6 +158,50 @@
 						</button>
 					</div>
 				</form>
+				<?php
+				 include('bd.php');
+				 if ($_SERVER["REQUEST_METHOD"] == "POST") {
+						$titre=$_POST['Titre'];
+						$destination=$_POST['destination'];
+						$Description=$_POST['Description'];
+						$Prix=$_POST['Prix'];
+						$nbrPlaces=$_POST['nbrPlaces'];
+						$dateDebut=$_POST['dateDebut'];
+						$dateFin=$_POST['dateFin'];
+						if(!empty(trim($titre))&&!empty(trim($Description))&& !empty(trim($destination))&&!empty($Prix)&&!empty($nbrPlaces)&&!empty( $dateDebut)&&!empty($dateFin)&&validationDate( $dateDebut,$dateFin)&&valisationNumber($Prix)&&valisationNumber($nbrPlaces)){
+						  $requete = "INSERT INTO activite (titre, description, destination, prix, dateDebut, dateFin, places_disponibles) 
+										VALUES ('$titre', '$Description', '$destination', $Prix, '$dateDebut', '$dateFin', $nbrPlaces)";
+						  $conn->exec( $requete);
+						
+						}else{
+						 
+						  echo "
+						   <script>
+						    alert('vide')
+						   </script> 
+						  ";
+						  
+						}
+				 }
+				  function validationDate($datedebut,$dateFin)
+				  {
+					if(($datedebut<=>$dateFin)!=1)
+					{
+					  return TRUE;
+					}
+					return False;
+					
+				   
+				  }
+				
+				  function valisationNumber($number)
+				  {
+					if($number>0)
+					 return true;
+					return false;
+				  }
+				
+				?>
 			</div>
 		</div>
 </div>
