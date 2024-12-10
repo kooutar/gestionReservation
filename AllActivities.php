@@ -210,6 +210,9 @@ if ($row = mysqli_fetch_assoc($result)) {
 
         // Récupérer l'ID du dernier client inséré
         $idClient = mysqli_insert_id($conn);
+        $queryInsertionReserv="INSERT INTO reservation (id_activite, id_client) VALUES($idACtivite,$idClient) ;";
+        $resevequery=mysqli_query($conn,$queryInsertionReserv);
+
 
         // $queryReservation = "INSERT INTO reservation (id_activite, id_client) VALUES (?, ?)";
         // $stmtReservation = mysqli_prepare($conn, $queryReservation);
