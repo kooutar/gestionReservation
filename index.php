@@ -35,17 +35,45 @@
 			</tr>
 		</thead>
 		<tbody>
-			<!-- Ligne de données -->
-			<tr class="hover:bg-gray-50">
-				<td class="py-3 px-4 text-sm text-gray-700">1</td>
-				<td class="py-3 px-4 text-sm text-gray-700">Yoga</td>
-				<td class="py-3 px-4 text-sm text-gray-700">Alice Dupont</td>
-				<td class="py-3 px-4 text-sm text-gray-700">2024-12-06</td>
-				<td class="py-3 px-4 text-sm text-gray-700">Confirmée</td>
-				<td class="py-3 px-4 text-sm text-gray-700">Confirmée</td>
-				<td class="py-3 px-4 text-sm text-gray-700">Confirmée</td>
-			</tr>
-			<!-- Autres lignes de données -->
+			<?php
+			 include('bd.php');
+			 $query = "SELECT * FROM client";
+				$result = mysqli_query($conn, $query);
+
+				if ($result) {
+					// Parcourir les résultats
+					while ($client = mysqli_fetch_assoc($result)) {
+						echo "
+						<tr class='hover:bg-gray-50'>
+							<td class='py-3 px-4 text-sm text-gray-700'>{$client['id_client']}</td>
+							<td class='py-3 px-4 text-sm text-gray-700'>{$client['nom']}</td>
+							<td class='py-3 px-4 text-sm text-gray-700'>{$client['pernom']}</td>
+							<td class='py-3 px-4 text-sm text-gray-700'>{$client['email']}</td>
+							<td class='py-3 px-4 text-sm text-gray-700'>{$client['telephone']}</td>
+							<td class='py-3 px-4 text-sm text-gray-700'>{$client['adresse']}</td>
+							<td class='py-3 px-4 text-sm text-gray-700'>{$client['date_naissance']}</td>
+						</tr>
+						";
+					}
+				}
+			//  $AllCleints=$conn->query("SELECT * FROM client");
+			//  $AllCleintsTable=$AllCleints->fetchAll(PDO::FETCH_ASSOC);
+			//  foreach($AllCleintsTable as $client)
+			//  {
+			//   echo "
+			//    <tr class='hover:bg-gray-50'>
+			// 	 <td class='py-3 px-4 text-sm text-gray-700'>{$client['id_client']}</td>
+			// 	 <td class='py-3 px-4 text-sm text-gray-700'>{$client['nom']}</td>
+			// 	 <td class='py-3 px-4 text-sm text-gray-700'>{$client['pernom']}</td>
+			// 	 <td class='py-3 px-4 text-sm text-gray-700'>{$client['email']}</td>
+			// 	 <td class='py-3 px-4 text-sm text-gray-700'>{$client['telephone']}</td>
+			// 	 <td class='py-3 px-4 text-sm text-gray-700'>{$client['adresse']}</td>
+			// 	 <td class='py-3 px-4 text-sm text-gray-700'>{$client['date_naissance']}</td>
+			//   ";
+			//  }
+			?>
+		
+			
 			
 		</tbody>
 	</table>
@@ -62,17 +90,17 @@
 			</tr>
 		</thead>
 		<tbody>
-			<!-- Ligne de données -->
-			<tr class="hover:bg-gray-50">
-				<td class="py-3 px-4 text-sm text-gray-700">1</td>
-				<td class="py-3 px-4 text-sm text-gray-700">Yoga</td>
-				<td class="py-3 px-4 text-sm text-gray-700">Alice Dupont</td>
-				<td class="py-3 px-4 text-sm text-gray-700">2024-12-06</td>
-				<td class="py-3 px-4 text-sm text-gray-700">Confirmée</td>
-				<td class="py-3 px-4 text-sm text-gray-700">Confirmée</td>
-				<td class="py-3 px-4 text-sm text-gray-700">Confirmée</td>
-			</tr>
-			<!-- Autres lignes de données -->
+		
+			 <tr class="hover:bg-gray-50">
+			 	<td class="py-3 px-4 text-sm text-gray-700">1</td>
+			 	<td class="py-3 px-4 text-sm text-gray-700">Yoga</td>
+			 	<td class="py-3 px-4 text-sm text-gray-700">Alice Dupont</td>
+			 	<td class="py-3 px-4 text-sm text-gray-700">2024-12-06</td>
+			 	<td class="py-3 px-4 text-sm text-gray-700">Confirmée</td>
+			 	<td class="py-3 px-4 text-sm text-gray-700">Confirmée</td>
+			 	<td class="py-3 px-4 text-sm text-gray-700">Confirmée</td>
+			 </tr>
+			
 			
 		</tbody>
 	</table>
@@ -80,7 +108,6 @@
 	<div id="tableactivite" class="table flex flex flex-col w-full  hidden">
 		<div class="flex justify-end"><button id="showAllActivites" class="text-white" >show All Activite</button></div>
 		<div class="flex items-center justify-center">
-			<!-- Author: FormBold Team -->
 			<div class="mx-auto w-full max-w-[550px] bg-white">
 				<form class="p-6" action="index.php" method="post">
 					<div class="-mx-3 flex flex-wrap">
@@ -171,15 +198,16 @@
 						if(!empty(trim($titre))&&!empty(trim($Description))&& !empty(trim($destination))&&!empty($Prix)&&!empty($nbrPlaces)&&!empty( $dateDebut)&&!empty($dateFin)&&validationDate( $dateDebut,$dateFin)&&valisationNumber($Prix)&&valisationNumber($nbrPlaces)){
 						  $requete = "INSERT INTO activite (titre, description, destination, prix, dateDebut, dateFin, places_disponibles) 
 										VALUES ('$titre', '$Description', '$destination', $Prix, '$dateDebut', '$dateFin', $nbrPlaces)";
-						  $conn->exec( $requete);
+						//   $conn->exec( $requete);
+						mysqli_query($conn,$requete);
 						
 						}else{
 						 
-						  echo "
-						   <script>
-						    alert('vide')
-						   </script> 
-						  ";
+						//   echo "
+						//    <script>
+						//     alert('vide')
+						//    </script> 
+						//   ";
 						  
 						}
 				 }

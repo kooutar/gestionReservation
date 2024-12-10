@@ -7,13 +7,98 @@
     <script src="https://cdn.tailwindcss.com"></script>
     <title>Document</title>
 </head>
-<body style="background: linear-gradient(to bottom, #0f0c29, #302b63, #24243e);" class="p-6">
-    <section class="grid grid-cols-4 gap-6  w-full" > 
+<body style="background: linear-gradient(to bottom, #0f0c29, #302b63, #24243e);" class=" ">
+   <div id="modaleInscription" class="flex justify-center items-center bg-black/50 fixed z-50 w-full h-full hidden ">
+    <form class="p-6 bg-white w-1/2 "  action="AllActivities.php" method="POST">
+   <div class="flex items-start justify-between p-5 border-b ">
+                <h3 class="text-gray-900 text-xl lg:text-2xl font-semibold ">
+                   Reserver une place
+                </h3>
+                <button id="closeBteForListPlayers" type="button" class="closeBte text-gray-400  hover:bg-gray-200  rounded-lg p-5  ">
+                    &times;
+                </button>
+            </div>
+					<div class="-mx-3 flex flex-wrap">
+						<div class="w-full px-3 sm:w-1/2">
+							<div class="mb-5">
+								<label  class="mb-3 block text-base font-medium text-[#07074D]">
+                                nom
+								</label>
+								<input type="text" name="nom" id="Titre"
+									class="w-full rounded-md border border-[#e0e0e0] bg-white py-3 px-6 text-base font-medium text-[#6B7280] outline-none focus:border-[#6A64F1] focus:shadow-md" />
+							</div>
+						</div>
+						<div class="w-full px-3 sm:w-1/2">
+							<div class="mb-5">
+								<label  class="mb-3 block text-base font-medium text-[#07074D]">
+                                pernom
+								</label>
+								<input type="text" name="pernom" id="destination"
+									class="w-full rounded-md border border-[#e0e0e0] bg-white py-3 px-6 text-base font-medium text-[#6B7280] outline-none focus:border-[#6A64F1] focus:shadow-md" />
+							</div>
+						</div>
+					</div>
+					
+					<div class="-mx-3 flex flex-wrap">
+						<div class="w-full px-3 sm:w-1/2">
+							<div class="mb-5">
+								<label class="mb-3 block text-base font-medium text-[#07074D]">
+                                email
+								</label>
+								<input type="text" name="email" id="dateDebut"
+									class="w-full rounded-md border border-[#e0e0e0] bg-white py-3 px-6 text-base font-medium text-[#6B7280] outline-none focus:border-[#6A64F1] focus:shadow-md" />
+							</div>
+						</div>
+						<div class="w-full px-3 sm:w-1/2">
+							<div class="mb-5">
+								<label  class="mb-3 block text-base font-medium text-[#07074D]">
+                                telephone
+								</label>
+								<input type="text" name="telephone" id="dateFin"
+									class="w-full rounded-md border border-[#e0e0e0] bg-white py-3 px-6 text-base font-medium text-[#6B7280] outline-none focus:border-[#6A64F1] focus:shadow-md" />
+							</div>
+						</div>
+					</div>
+		
+					<div class="-mx-3 flex flex-wrap">
+						<div class="w-full px-3 sm:w-1/2">
+							<div class="mb-5">
+								<label  class="mb-3 block text-base font-medium text-[#07074D]">
+                                adresse
+								</label>
+								<input type="text" name="adresse" id="Prix"
+									class="w-full rounded-md border border-[#e0e0e0] bg-white py-3 px-6 text-base font-medium text-[#6B7280] outline-none focus:border-[#6A64F1] focus:shadow-md" />
+							</div>
+						</div>
+						<div class="w-full px-3 sm:w-1/2">
+							<div class="mb-5">
+								<label  class="mb-3 block text-base font-medium text-[#07074D]">
+                                date naissance
+								</label>
+								<input type="date" name="dateNaissance" id="nbrPlaces"
+									class="w-full rounded-md border border-[#e0e0e0] bg-white py-3 px-6 text-base font-medium text-[#6B7280] outline-none focus:border-[#6A64F1] focus:shadow-md" />
+							</div>
+						</div>
+					</div>
+		            <input id="idInput" type="text" name="id"  value="" class="">
+					<div>
+						<button id="bteReserver" 
+							class="hover:shadow-form w-full rounded-md bg-[#6A64F1] py-3 px-8 text-center text-base font-semibold text-white outline-none">
+							Reserver
+						</button>
+					</div>
+		</form> 
+   </div>
+
+    <section class="grid grid-cols-4 gap-6  w-full p-6" > 
         <?php
         $arraySrcImage=['images/image1.jpg','images/image2.jpg','images/image3.jpg','images/image4.jpg'];
          include('bd.php');
-         $stetemnt=$conn->query("SELECT * FROM activite; ");
-         $results = $stetemnt->fetchAll(PDO::FETCH_ASSOC);
+        //  $stetemnt=$conn->query("SELECT * FROM activite; ");
+        $query="SELECT * FROM activite;";
+        $result=mysqli_query($conn,$query);
+        $results = mysqli_fetch_all($result, MYSQLI_ASSOC);
+        //  $results = $stetemnt->fetchAll(PDO::FETCH_ASSOC);
     foreach ($results as $row) {
         echo "
         <div class='rounded-lg bg-white p-6 text-surface shadow-secondary-1 flex flex-col'>
@@ -36,14 +121,28 @@
 
     </section>
    <script>
+    let id_activite;
     const buttons= document.querySelectorAll('.bteReservation');
     buttons.forEach(button => {
      button.addEventListener('click',()=>{
+       
         console.log(button.id);
-        let id_activite=button.id
-        window.location.href ="AllActivities.php?id="+id_activite;
+         id_activite=button.id;
+         document.querySelector('#idInput').value=id_activite;
+         document.querySelector('#modaleInscription').classList.remove('hidden');
      })
     });
+    
+   
+
+    document.querySelector('#bteReserver').addEventListener('click',()=>{
+
+      console.log(document.querySelector('#idInput').value) 
+    })
+    
+    document.querySelector('#closeBteForListPlayers').addEventListener('click',()=>{
+        document.querySelector('#modaleInscription').classList.add('hidden');
+    })
     </script> 
     
 
@@ -51,22 +150,74 @@
 	  <?php
       if(isset($_GET['id']))
       {
-        echo "existe ";
+        // echo "existe ";
        
-        echo  $_GET['id'];  
+        // echo  $_GET['id'];
+        // $requte=$conn->prepare("SELECT titre FROM activite WHERE  id_activite=:id;");
+        // $requte->bindParam(':id',$_GET['id'],PDO::PARAM_INT);
+        // $requte->execute();
+        // $affichage = $requte->fetch(PDO::FETCH_ASSOC);
+        // if ($affichage) {
+        //     echo $affichage['titre'];
+        // } else {
+        //     echo "pas d'activite.";
+        // }
+        // Préparation de la requête avec une clause WHERE
+$id = intval($_GET['id']); // Assurez-vous que l'ID est un entier
+$query = "SELECT titre FROM activite WHERE id_activite = ?";
+$stmt = mysqli_prepare($conn, $query);
+
+// Liaison des paramètres
+mysqli_stmt_bind_param($stmt, "i", $id);
+
+// Exécuter la requête
+mysqli_stmt_execute($stmt);
+
+// Récupérer le résultat
+$result = mysqli_stmt_get_result($stmt);
+
+// Vérifier si un enregistrement a été trouvé
+if ($row = mysqli_fetch_assoc($result)) {
+    echo $row['titre'];
+} else {
+    echo "pas d'activite.";
+}
+
       }
-      else{
-        echo "n'exist pas";
-      }
-    //   
-        //    $stetemnt1=$conn->query("SELECT id_activite FROM activite WHERE id_activite=id; ");
-    //    $results1 = $stetemnt1->fetch(PDO::FETCH_ASSOC);
-    //     echo "
-    //     <script>
-    //     alert({ $results1['id_activite']})
-    //     </script>
-    //     ";
+     
       ?>
+
+
+<?php
+  if ($_SERVER["REQUEST_METHOD"] == "POST") {
+        $idACtivite=$_POST['id'];
+        // echo $idACtivite;
+        $nom=$_POST['nom'];
+        $pernom=$_POST['pernom'];
+        $email=$_POST['email'];
+        $telephone=$_POST['telephone'];
+        $adresse=$_POST['adresse'];
+        $dateNaissance=$_POST['dateNaissance'];
+        // $conn->exec("INSERT INTO client(nom,pernom,email,telephone,adresse,date_naissance) VALUES('$nom','$pernom','$email','$telephone','$adresse','$dateNaissance');");
+        // $idLastClient=$conn->query("SELECT MAX(id_client) FROM client");
+        // $idCleint=$idLastClient->fetch(PDO::FETCH_ASSOC);
+        // $conn->exec("INSERT INTO reservation(id_activite,id_client) VALUES($idACtivite,$idCleint);");
+        $queryClient = "INSERT INTO client (nom, pernom, email, telephone, adresse, date_naissance) 
+        VALUES (?, ?, ?, ?, ?, ?)";
+        $stmtClient = mysqli_prepare($conn, $queryClient);
+        mysqli_stmt_bind_param($stmtClient, "ssssss", $nom, $pernom, $email, $telephone, $adresse, $dateNaissance);
+        mysqli_stmt_execute($stmtClient);
+
+        // Récupérer l'ID du dernier client inséré
+        $idClient = mysqli_insert_id($conn);
+
+        // $queryReservation = "INSERT INTO reservation (id_activite, id_client) VALUES (?, ?)";
+        // $stmtReservation = mysqli_prepare($conn, $queryReservation);
+        // mysqli_stmt_bind_param($stmtReservation, "ii", $idActivite, $idClient);
+        // mysqli_stmt_execute($stmtReservation);
+
+  }
+?>
  
    
 </body>

@@ -5,14 +5,17 @@ $password = "";
 $dbname = "testphp";     
 $dsn = "mysql:host=$servername;dbname=$dbname;charset=utf8";
 
-try {
-
-    $conn = new PDO($dsn, $username, $password);
 
 
-    $conn->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
+    // $conn = new PDO($dsn, $username, $password);
+    $conn = mysqli_connect($servername, $username, $password,$dbname);
 
 
+    // $conn->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
+    if (!$conn) {
+      die("Connection failed: " . mysqli_connect_error());
+    }
+    // echo "Connected successfully";
     
       $query1 ="
       CREATE TABLE IF NOT EXISTS client(
@@ -49,12 +52,12 @@ try {
        FOREIGN KEY (id_activite) REFERENCES activite(id_activite)
         )
       ";
-      $stmt1 = $conn->query($query1);
-      $stmt2 = $conn->query($query2);
-      $stmt3 = $conn->query($query3);
-     
-} catch (PDOException $e) {
-    echo "Erreur de connexion : " . $e->getMessage();
-}
+      // $stmt1 = $conn->query($query1);
+      // $stmt2 = $conn->query($query2);
+      // $stmt3 = $conn->query($query3);
+   mysqli_query($conn,$query1);
+   mysqli_query($conn,$query2);  
+   mysqli_query($conn,$query3);     
+
 
 ?>
