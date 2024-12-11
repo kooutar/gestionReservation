@@ -71,4 +71,4 @@ SELECT *
 FROM activite
 INNER JOIN reservation
 ON Client.id_client = reservation.id_client 
-WHERE reservation.id_client=3; 
+WHERE reservation.id_client=2; 

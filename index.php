@@ -9,84 +9,71 @@
 <script src="https://cdn.tailwindcss.com"></script>
 </head>
 <body>
-	<header>
-		<span>LOGO</span>
-	</header>
-  <section class="flex h-[800px] ">
-    <div class="bg-gray-50 w-[200px] h-full flex flex-col gap-6 p-6 justify-center">
-      <button id="Clients" class="py-3 text-white font-semibold rounded-lg shadow-lg transition-all duration-300 transform hover:scale-105" style="background: linear-gradient(to bottom, #0f0c29, #302b63, #24243e);">Clients</button>
-	  <button id="reservation" class="py-3 text-white font-semibold rounded-lg shadow-lg transition-all duration-300 transform hover:scale-105" style="background: linear-gradient(to bottom, #0f0c29, #302b63, #24243e);">reservation</button>
-	  <button id="activite" class="py-3 text-white font-semibold rounded-lg shadow-lg transition-all duration-300 transform hover:scale-105" style="background: linear-gradient(to bottom, #0f0c29, #302b63, #24243e);">activite</button>
+	
+  <section class=" block md:flex md:h-[800px] ">
+ <div >
+   <img src="images/logo.png" alt="" class="w-32">
+	
+    <div class="bg-gray-50  w-full md:w-[200px] h-full flex md:flex-col gap-6 p-6 justify-center">
+      <button id="Clients" class="px-3 py-3 text-white font-semibold rounded-lg shadow-lg transition-all duration-300 transform hover:scale-105" style="background: linear-gradient(to bottom, #0f0c29, #302b63, #24243e);">Clients</button>
+	  <button id="reservation" class="px-3 py-3 text-white font-semibold rounded-lg shadow-lg transition-all duration-300 transform hover:scale-105" style="background: linear-gradient(to bottom, #0f0c29, #302b63, #24243e);">reservation</button>
+	  <button id="activite" class="px-3 py-3 text-white font-semibold rounded-lg shadow-lg transition-all duration-300 transform hover:scale-105" style="background: linear-gradient(to bottom, #0f0c29, #302b63, #24243e);">activite</button>
 	  
 	</div>
+	</div>
     <div class="w-full h-full  flex flex-col gap-6 p-6" style="background: linear-gradient(to bottom, #0f0c29, #302b63, #24243e);">
-       <!-- <H1 class="text-center text-white uppercase tracking-wider"> Show ALL Clients</H1> -->
-	   <table id="tableClients" class="table min-w-full bg-white border border-gray-200 rounded-lg shadow-md overflow-hidden">
-		 <H1 class="text-center text-white uppercase tracking-wider"> Show ALL Clients</H1>
-		<thead>
-			<tr class="bg-gray-100 text-gray-600 text-left">
-				<th class="py-3 px-4 font-medium text-sm uppercase tracking-wider">id</th>
-				<th class="py-3 px-4 font-medium text-sm uppercase tracking-wider">Nom</th>
-				<th class="py-3 px-4 font-medium text-sm uppercase tracking-wider">prenom</th>
-				<th class="py-3 px-4 font-medium text-sm uppercase tracking-wider">mail</th>
-				<th class="py-3 px-4 font-medium text-sm uppercase tracking-wider">telephone</th>
-				<th class="py-3 px-4 font-medium text-sm uppercase tracking-wider">adresse</th>
-				<th class="py-3 px-4 font-medium text-sm uppercase tracking-wider">date de naissance</th>
-			</tr>
-		</thead>
-		<tbody>
-			<?php
-			 include('bd.php');
-			 $query = "SELECT * FROM client";
-				$result = mysqli_query($conn, $query);
+	   <div class="overflow-x-auto">
+  <table id="tableClients" class="table min-w-[200px] md:min-w-full bg-white border border-gray-200 rounded-lg shadow-md overflow-hidden">
+    
+	
+	
+    
+    <thead>
+      <tr class="bg-gray-100 text-gray-600 text-left">
+        <th class="py-3 px-4 font-medium text-sm uppercase tracking-wider">ID</th>
+        <th class="py-3 px-4 font-medium text-sm uppercase tracking-wider">Nom</th>
+        <th class="py-3 px-4 font-medium text-sm uppercase tracking-wider">Prénom</th>
+        <th class="py-3 px-4 font-medium text-sm uppercase tracking-wider">Mail</th>
+        <th class="py-3 px-4 font-medium text-sm uppercase tracking-wider">Téléphone</th>
+        <th class="py-3 px-4 font-medium text-sm uppercase tracking-wider">Adresse</th>
+        <th class="py-3 px-4 font-medium text-sm uppercase tracking-wider">Date de Naissance</th>
+      </tr>
+    </thead>
 
-				if ($result) {
-					// Parcourir les résultats
-					while ($client = mysqli_fetch_assoc($result)) {
-						echo "
-						<tr class='hover:bg-gray-50'>
-							<td class='py-3 px-4 text-sm text-gray-700'>{$client['id_client']}</td>
-							<td class='py-3 px-4 text-sm text-gray-700'>{$client['nom']}</td>
-							<td class='py-3 px-4 text-sm text-gray-700'>{$client['pernom']}</td>
-							<td class='py-3 px-4 text-sm text-gray-700'>{$client['email']}</td>
-							<td class='py-3 px-4 text-sm text-gray-700'>{$client['telephone']}</td>
-							<td class='py-3 px-4 text-sm text-gray-700'>{$client['adresse']}</td>
-							<td class='py-3 px-4 text-sm text-gray-700'>{$client['date_naissance']}</td>
-						</tr>
-						";
-					}
-				}
-			//  $AllCleints=$conn->query("SELECT * FROM client");
-			//  $AllCleintsTable=$AllCleints->fetchAll(PDO::FETCH_ASSOC);
-			//  foreach($AllCleintsTable as $client)
-			//  {
-			//   echo "
-			//    <tr class='hover:bg-gray-50'>
-			// 	 <td class='py-3 px-4 text-sm text-gray-700'>{$client['id_client']}</td>
-			// 	 <td class='py-3 px-4 text-sm text-gray-700'>{$client['nom']}</td>
-			// 	 <td class='py-3 px-4 text-sm text-gray-700'>{$client['pernom']}</td>
-			// 	 <td class='py-3 px-4 text-sm text-gray-700'>{$client['email']}</td>
-			// 	 <td class='py-3 px-4 text-sm text-gray-700'>{$client['telephone']}</td>
-			// 	 <td class='py-3 px-4 text-sm text-gray-700'>{$client['adresse']}</td>
-			// 	 <td class='py-3 px-4 text-sm text-gray-700'>{$client['date_naissance']}</td>
-			//   ";
-			//  }
-			?>
-		
-			
-			
-		</tbody>
-	</table>
+    <tbody>
+      <?php
+      include('bd.php');
+      $query = "SELECT * FROM client";
+      $result = mysqli_query($conn, $query);
+
+      if ($result) {
+          // Parcourir les résultats
+          while ($client = mysqli_fetch_assoc($result)) {
+              echo "
+              <tr class='hover:bg-gray-50'>
+                  <td class='py-3 px-4 text-sm text-gray-700'>{$client['id_client']}</td>
+                  <td class='py-3 px-4 text-sm text-gray-700'>{$client['nom']}</td>
+                  <td class='py-3 px-4 text-sm text-gray-700'>{$client['pernom']}</td>
+                  <td class='py-3 px-4 text-sm text-gray-700'>{$client['email']}</td>
+                  <td class='py-3 px-4 text-sm text-gray-700'>{$client['telephone']}</td>
+                  <td class='py-3 px-4 text-sm text-gray-700'>{$client['adresse']}</td>
+                  <td class='py-3 px-4 text-sm text-gray-700'>{$client['date_naissance']}</td>
+              </tr>
+              ";
+          }
+      }
+      ?>
+    </tbody>
+  </table>
+</div>
+
+
 	<table id="tableReservation" class="table min-w-full bg-white border border-gray-200 rounded-lg shadow-md overflow-hidden hidden">
 		<thead>
 			<tr class="bg-gray-100 text-gray-600 text-left">
 				<th class="py-3 px-4 font-medium text-sm uppercase tracking-wider">Titre </th>
 				<th class="py-3 px-4 font-medium text-sm uppercase tracking-wider">Nom</th>
 				<th class="py-3 px-4 font-medium text-sm uppercase tracking-wider">Status</th>
-				<!-- <th class="py-3 px-4 font-medium text-sm uppercase tracking-wider">mail</th>
-				<th class="py-3 px-4 font-medium text-sm uppercase tracking-wider">telephone</th>
-				<th class="py-3 px-4 font-medium text-sm uppercase tracking-wider">adresse</th>
-				<th class="py-3 px-4 font-medium text-sm uppercase tracking-wider">date de naissance</th> -->
 			</tr>
 		</thead>
 		<tbody>
@@ -114,7 +101,7 @@
 	</table>
 
 	<div id="tableactivite" class="table flex flex flex-col w-full  hidden">
-		<div class="flex justify-end"><button id="showAllActivites" class="text-white" >show All Activite</button></div>
+		<div class="flex justify-end"><button id="showAllActivites" class="hover:shadow-form mb-2 rounded-md bg-[#6A64F1] py-3 px-8 text-center text-base font-semibold text-white outline-none">show All Activite</button></div>
 		<div class="flex items-center justify-center">
 			<div class="mx-auto w-full max-w-[550px] bg-white">
 				<form class="p-6" action="index.php" method="post">
