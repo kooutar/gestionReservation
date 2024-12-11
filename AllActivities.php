@@ -80,7 +80,7 @@
 							</div>
 						</div>
 					</div>
-		            <input id="idInput" type="text" name="id"  value="" class="">
+		            <input id="idInput" type="text" name="id"  value="" class="invisible">
 					<div>
 						<button id="bteReserver" 
 							class="hover:shadow-form w-full rounded-md bg-[#6A64F1] py-3 px-8 text-center text-base font-semibold text-white outline-none">
@@ -202,22 +202,47 @@ if ($row = mysqli_fetch_assoc($result)) {
         // $idLastClient=$conn->query("SELECT MAX(id_client) FROM client");
         // $idCleint=$idLastClient->fetch(PDO::FETCH_ASSOC);
         // $conn->exec("INSERT INTO reservation(id_activite,id_client) VALUES($idACtivite,$idCleint);");
-        $queryClient = "INSERT INTO client (nom, pernom, email, telephone, adresse, date_naissance) 
-        VALUES (?, ?, ?, ?, ?, ?)";
-        $stmtClient = mysqli_prepare($conn, $queryClient);
-        mysqli_stmt_bind_param($stmtClient, "ssssss", $nom, $pernom, $email, $telephone, $adresse, $dateNaissance);
-        mysqli_stmt_execute($stmtClient);
+        $requeteAllMail="SELECT email FROM client";
+        $ALLmail=mysqli_query($conn,$requeteAllMail);
+       while( $allMails = mysqli_fetch_assoc($ALLmail))
+       {
+          if($email=$allMails['email'])
+          {
+            $requteRecupereClientparMail="SELECT id_client FROM client WHERE email='$email';";
+            $ClinetWithMail=mysqli_query($conn,$requteRecupereClientparMail);
+            while ($cleint = mysqli_fetch_assoc($ClinetWithMail)) {
+                $id= $cleint['id_client'];
 
-        // Récupérer l'ID du dernier client inséré
-        $idClient = mysqli_insert_id($conn);
-        $queryInsertionReserv="INSERT INTO reservation (id_activite, id_client) VALUES($idACtivite,$idClient) ;";
-        $resevequery=mysqli_query($conn,$queryInsertionReserv);
+            }
+            // echo $id.'<br>';
+            $requteSavoirCleintParticiperActivite="SELECT id_reservation FROM reservation WHERE id_client=$id AND id_activite=$idACtivite;";
+            $idActiviteSiexiste=mysqli_query($conn, $requteSavoirCleintParticiperActivite);
+            $idActivite=mysqli_fetch_all( $idActiviteSiexiste, MYSQLI_ASSOC);
+             if(!$idActivite)
+             {
+                 echo "vous etes deja inscrit dans site activite";
+                 break;
+             }
 
-
-        // $queryReservation = "INSERT INTO reservation (id_activite, id_client) VALUES (?, ?)";
-        // $stmtReservation = mysqli_prepare($conn, $queryReservation);
-        // mysqli_stmt_bind_param($stmtReservation, "ii", $idActivite, $idClient);
-        // mysqli_stmt_execute($stmtReservation);
+                
+                     echo "mail exist";
+                     break;
+          }
+          else{
+            $queryClient = "INSERT INTO client (nom, pernom, email, telephone, adresse, date_naissance) 
+            VALUES (?, ?, ?, ?, ?, ?)";
+            $stmtClient = mysqli_prepare($conn, $queryClient);
+            mysqli_stmt_bind_param($stmtClient, "ssssss", $nom, $pernom, $email, $telephone, $adresse, $dateNaissance);
+            mysqli_stmt_execute($stmtClient);
+    
+            // Récupérer l'ID du dernier client inséré
+            $idClient = mysqli_insert_id($conn);
+            $queryInsertionReserv="INSERT INTO reservation (id_activite, id_client) VALUES($idACtivite,$idClient) ;";
+            $resevequery=mysqli_query($conn,$queryInsertionReserv);
+          }
+       }
+       
+         
 
   }
 ?>

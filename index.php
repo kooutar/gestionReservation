@@ -80,27 +80,35 @@
 	<table id="tableReservation" class="table min-w-full bg-white border border-gray-200 rounded-lg shadow-md overflow-hidden hidden">
 		<thead>
 			<tr class="bg-gray-100 text-gray-600 text-left">
-				<th class="py-3 px-4 font-medium text-sm uppercase tracking-wider">kaoutar</th>
+				<th class="py-3 px-4 font-medium text-sm uppercase tracking-wider">Titre </th>
 				<th class="py-3 px-4 font-medium text-sm uppercase tracking-wider">Nom</th>
-				<th class="py-3 px-4 font-medium text-sm uppercase tracking-wider">prenom</th>
-				<th class="py-3 px-4 font-medium text-sm uppercase tracking-wider">mail</th>
+				<th class="py-3 px-4 font-medium text-sm uppercase tracking-wider">Status</th>
+				<!-- <th class="py-3 px-4 font-medium text-sm uppercase tracking-wider">mail</th>
 				<th class="py-3 px-4 font-medium text-sm uppercase tracking-wider">telephone</th>
 				<th class="py-3 px-4 font-medium text-sm uppercase tracking-wider">adresse</th>
-				<th class="py-3 px-4 font-medium text-sm uppercase tracking-wider">date de naissance</th>
+				<th class="py-3 px-4 font-medium text-sm uppercase tracking-wider">date de naissance</th> -->
 			</tr>
 		</thead>
 		<tbody>
-		
-			 <tr class="hover:bg-gray-50">
-			 	<td class="py-3 px-4 text-sm text-gray-700">1</td>
-			 	<td class="py-3 px-4 text-sm text-gray-700">Yoga</td>
-			 	<td class="py-3 px-4 text-sm text-gray-700">Alice Dupont</td>
-			 	<td class="py-3 px-4 text-sm text-gray-700">2024-12-06</td>
-			 	<td class="py-3 px-4 text-sm text-gray-700">Confirmée</td>
-			 	<td class="py-3 px-4 text-sm text-gray-700">Confirmée</td>
-			 	<td class="py-3 px-4 text-sm text-gray-700">Confirmée</td>
+		  <?php
+		  $requete="SELECT activite.titre, client.nom, reservation.status
+					FROM activite
+					INNER JOIN reservation ON activite.id_activite = reservation.id_activite
+					INNER JOIN client ON client.id_client = reservation.id_client;
+ ";
+		 $result= mysqli_query($conn, $requete);
+		 if ($result) {
+			while($reservation = mysqli_fetch_assoc($result)){
+			echo" <tr class='hover:bg-gray-50'>
+			 	<td class='py-3 px-4 text-sm text-gray-700'>{$reservation['titre']}</td>
+			 	<td class='py-3 px-4 text-sm text-gray-700'>{$reservation['nom']}</td>
+			 	<td class='py-3 px-4 text-sm text-gray-700'>{$reservation['status']}</td>
+
 			 </tr>
-			
+			 ";
+			}
+		 }
+			?>
 			
 		</tbody>
 	</table>
