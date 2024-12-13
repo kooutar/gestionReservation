@@ -32,6 +32,8 @@ include('bd.php');
 
 
 <?php
+ $regex="/@gmail.com$/";
+ $regex2 = "/^[0-9]{10}$/";
    $nomclientErr="";
    $prenomclientErr="";
    $mailclientErr="";
@@ -64,13 +66,15 @@ include('bd.php');
             {
                 $prenomclientErr="prenom ne doit pas etre vide";
             }
-            if(empty(trim($email)))
+            if(empty(trim($email))|| !preg_match($regex,$email))
             {
-                $mailclientErr="mail ne doit pas etre vide";
+            
+               
+                $mailclientErr="mail invalide";
             }
-            if(empty(trim($telephone)))
+            if(empty(trim($telephone))||!preg_match($regex2,$telephone) )
             {
-                $telephoneclientErr="telephonne ne doit pas etre vide";
+                $telephoneclientErr="telephonne invalide";
             }
             if(empty(trim($adresse)))
             {
